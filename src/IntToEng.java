@@ -13,6 +13,14 @@ public class IntToEng {
 
     // 数値を英訳する変換するメソッド
     static String translateEng(int n) {
-        return "";
+    	String eng;
+    	int len = String.valueOf(n).length();
+    	int d = (int)Math.pow(10, len-1);
+    	if(n == 0){
+    		return "zero";
+    	}
+    	
+    	}
+        return eng;
     }
 }
