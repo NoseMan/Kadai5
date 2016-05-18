@@ -34,8 +34,8 @@ public class IntToEng {
     		nchar[nchar.length-1-i] = a;
     	}
     	//for(int i=0;i<nchar.length;i++) System.out.print(nchar[i]+" "); // debug
-    	boolean isZero = true; //全部0か？
     	for(int i=(nchar.length/3)-1;i>=0;i--){
+    		boolean isZero = true; // 全部0か？
     		//System.out.println("iは" + i); // debug
     		for(int j=2;j>=0;j--){
     			//System.out.println("jは" + j); //debug
@@ -43,19 +43,20 @@ public class IntToEng {
     			if(charNum != 0){
     				//System.out.println("isZeroはおっけー nchar = "+ charNum); //debug
     				isZero = false;
-    				if(j==0 && Character.getNumericValue(nchar[1+(i*3)])!=1 ) result.append(oneToNine[charNum-1] + " "); // 1桁め
+    				if(j==0 && Character.getNumericValue(nchar[1+(i*3)])!=1 ) result.append(oneToNine[charNum-1]); // 1桁め
     				if(j==1){ // 2桁め
-    					result.append(charNum==1 ? tenToNineteen[Character.getNumericValue(nchar[i*3])] + " " : twentyToNinety[charNum-2]+" ");//2桁め
+    					result.append(charNum==1 ? tenToNineteen[Character.getNumericValue(nchar[i*3])] : twentyToNinety[charNum-2]);//2桁め
     				}
     				if(j==2){
-    					result.append(oneToNine[charNum-1] + " " +  "hundred " );// 3桁め
-    				}	
+    					result.append(oneToNine[charNum-1] +  " hundred" );// 3桁め
+    				}
+    				result.append(" "); // 空白処理
     			}
     		}
-    		if(!isZero && i != 0) result.append(largeUnit[i-1] + " ");
+    		if(!isZero && i != 0) result.append(largeUnit[i-1] + " " );
     	}
     	
-        return result.toString();
+        return result.deleteCharAt(result.lastIndexOf(" ")).toString();
     }
     
 }
