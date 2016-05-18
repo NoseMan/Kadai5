@@ -20,33 +20,35 @@ public class IntToEng {
 
     // 数値を英訳する変換するメソッド
     static String translateEng(int n) {
-    	String result = "";
+    	StringBuilder result = new StringBuilder();
     	
     	if(n==0) return "zero"; // 0の場合は例外としてzeroを返す
     	char[] nchar = String.valueOf(n).toCharArray(); // nをstringに変換後char[]に分割
+    	for(int i=0;i<nchar.length;i++) System.out.print(nchar[i]+" "); // debug
     	boolean isZero = true; //全部0か？
-    	for(int i=(nchar.length/3);i>=0;i--){
+    	for(int i=(nchar.length/3)-1;i>=0;i--){
     		System.out.println("iは" + i);
     		for(int j=2;j>=0;j--){
     			System.out.println("jは" + j);
-    			if((int)nchar[j+(i*3)] != 0){
-    				System.out.println("isZeroはおっけー nchar = "+ nchar[j+(i*3)]);
+    			int charNum = Character.getNumericValue(nchar[j+(i*3)]);
+    			if(charNum != 0){
+    				System.out.println("isZeroはおっけー nchar = "+ charNum);
     				isZero = false;
-    				if(j==0 && (int)nchar[1+(i*3)]!=1 ) result += translate1to9((int)nchar[(i*3)]); // 1桁め
+    				if(j==0 && Character.getNumericValue(nchar[1+(i*3)])!=1 ) result.append(translate1to9(charNum)); // 1桁め
     				if(j==1){ // 2桁め
-    					result += ((int)nchar[1+(i*3)]==1 ? translate10to19((int)nchar[i*3]) : translate20to90((int)nchar[1+(i*3)]));//2桁め
+    					result.append(charNum==1 ? translate10to19(Character.getNumericValue(nchar[i*3])) : translate20to90(charNum));//2桁め
     				}
     				if(j==2){
-    					result +=  translate1to9((int)nchar[2+(i*3)]) +  "hundred";// 3桁め
+    					result.append(translate1to9(charNum) +  "hundred");// 3桁め
     				}	
     			}
     		}
     	}
     	
-        return result;
+        return result.toString();
     }
     
-    static String translate1to9(int n){ return oneToNine[n-1]; }
-    static String translate20to90(int n){ return twentyToNinety[n-1]; }
-    static String translate10to19(int n){ return tenToNineteen[n]; }
+    static String translate1to9(int n){ System.out.println("translate1to9 throw n="+n); return oneToNine[n-1]; }
+    static String translate20to90(int n){ System.out.println("translate20to90 throw n="+n); return twentyToNinety[n-1]; }
+    static String translate10to19(int n){ System.out.println("translate10to19 throw n="+n); return tenToNineteen[n]; }
 }
